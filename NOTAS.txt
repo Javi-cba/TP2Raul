@@ -10,8 +10,11 @@ npm install jsonwebtoken
 npm install http
 npm install ws
 
+Nuevo del JC:
 Levantar serverWs.js:
 npm i serverWs.js (TODO: hacer que levante con nodemon)
 
+Suscripcion WS serverWS.js:
+ws://localhost:3020
 
 
