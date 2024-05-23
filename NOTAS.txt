@@ -7,6 +7,11 @@ npm install dotenv
 npm install cors
 npm install pg
 npm install jsonwebtoken
+npm install http
+npm install ws
+
+Levantar serverWs.js:
+npm i serverWs.js (TODO: hacer que levante con nodemon)
 
 
 
