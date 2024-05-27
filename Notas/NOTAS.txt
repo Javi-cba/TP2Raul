@@ -1,0 +1,30 @@
+INSTALAR:
+npm init 
+npm install
+npm install axios
+npm install express
+npm install dotenv
+npm install cors
+npm install pg
+npm install jsonwebtoken
+npm install http
+npm install ws
+
+Levantar serverWs.js:
+npm i serverWs.js 
+npm i micRandomTemp.js 
+npm i clientWs.js 
+
+Suscripcion WS serverWS.js:
+ws://localhost:3030
+
+
+Base de datos PosgreSQL🦏
+DATABASE_URL=postgresql://dataBase_owner:vxZb2WACpiE0@ep-hidden-waterfall-a55ixfje.us-east-2.aws.neon.tech/dataBase?sslmode=require
+
+
+
+
+
+
+

@@ -1,3 +1,4 @@
+// PUNTO 1: WS TEMPERATURA CADA 5 SEGUNDOS
 const express = require("express");
 const axios = require("axios");
 const http = require("http");
