@@ -2,12 +2,14 @@
 const express = require("express");
 const { Pool } = require("pg");
 require("dotenv").config();
+const cors = require("cors");
 
 const env = process.env;
-const app = express();
 const PORT = env.PORT4;
 const URL = `http://localhost:${PORT}`;
 
+const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Conexion a la base de datos
@@ -59,6 +61,20 @@ app.post("/db/temperatura", async (req, res) => {
     res.send(error);
   } finally {
     client.release(); // Cierra conexión
+  }
+});
+
+//GET DE LAS TEMPERATURAS
+app.get("/temperatura", async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const { rows } = await client.query(
+      "SELECT * FROM temperatura ORDER BY tem_id DESC LIMIT 10"
+    );
+    res.json(rows);
+  } catch (error) {
+    console.log(error);
+    res.send(error);
   }
 });
 
