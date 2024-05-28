@@ -9,6 +9,7 @@ const axios = require("axios");
 const app = express();
 const PORT = process.env.PORT;
 const PORT2 = process.env.PORT2;
+const PORT3 = process.env.PORT3;
 const URL = `ws://localhost:${PORT}`; // IndexWs.js
 const URL2 = `ws://localhost:${PORT2}`; // ClienteWs.js
 app.use(express.json());
@@ -28,11 +29,18 @@ wss.on("connection", (ws) => {
 
   clientWs.on("message", async (data) => {
     const temperatura = data.toString();
-    console.log("Temperatura de ClienteWs:", temperatura);
-    ws.send(temperatura);
-    //
-    //ACA DEBERIAMOS ENVIAR LA temperatura AL WEBHOOK
-    //
+    //console.log("Temperatura de ClienteWs:", temperatura);
+    ws.send(temperatura); //Temperatura recibida del ClienteWs
+
+    //envia la temperatura AL WEBHOOK
+    try {
+      await axios.post(`http://localhost:${PORT3}/temperatura`, {
+        temp: temperatura,
+      });
+      console.log("Temperatura enviada al webhook");
+    } catch (error) {
+      console.error("Error al enviar la temperatura al webhook:", error);
+    }
   });
   // -----------------------------------------------------
 

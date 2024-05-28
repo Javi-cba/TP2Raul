@@ -1,3 +1,19 @@
+Levantar los js con nodemon:
+npm run client
+npm run index
+npm run webhook 
+npm run restapi
+
+Una vez esta todo levantado, hay que levantar los 2 websocket:
+ws://localhost:3020 // IndexWs.js - envia la temp al webhook
+ws://localhost:3030 // ClienteWs.js - genera la temp y la envia al serverWs(IndexWs)
+
+
+
+
+
+
+
 INSTALAR:
 npm init 
 npm install
@@ -9,17 +25,13 @@ npm install pg
 npm install jsonwebtoken
 npm install http
 npm install ws
-
-Levantar serverWs.js:
-npm i serverWs.js 
-npm i micRandomTemp.js 
-npm i clientWs.js 
-
-Suscripcion WS serverWS.js:
-ws://localhost:3030
+npm install pg
 
 
-Base de datos PosgreSQL🦏
+
+
+
+Base de datos DEL JC PosgreSQL🦏
 DATABASE_URL=postgresql://dataBase_owner:vxZb2WACpiE0@ep-hidden-waterfall-a55ixfje.us-east-2.aws.neon.tech/dataBase?sslmode=require
 
 

@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "index": "nodemon IndexWs.js",
-    "client": "nodemon ClienteWs.js"
+    "client": "nodemon ClienteWs.js",
+    "webhook": "nodemon WebHook.js",
+    "restapi": "nodemon RestApi.js"
   },
   "author": "",
   "license": "ISC",
