@@ -7,9 +7,8 @@ const path = require("path");
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT; // MicTemp
-const PORT2 = process.env.PORT2; // ServerWs
-const URL = `ws://localhost:${PORT2}`; // para fetch de micTemp
+const PORT2 = process.env.PORT2;
+const URL = `ws://localhost:${PORT2}`;
 app.use(express.json());
 
 const server = http.createServer(app);
@@ -21,8 +20,10 @@ wss.on("connection", (ws) => {
 
   const timeTemperature = async () => {
     try {
-      const resp = await axios.get(`http://localhost:${PORT}/temp`);
-      ws.send(JSON.stringify(resp.data));
+      const max = 60;
+      const min = -20;
+      const temp = Math.floor(Math.random() * (max - min) + min);
+      ws.send(JSON.stringify(temp));
     } catch (error) {
       console.error("Error peticion temperatura:", error);
     }
@@ -39,5 +40,5 @@ wss.on("connection", (ws) => {
 });
 
 server.listen(PORT2, () => {
-  console.log("Subscripción de WS en " + URL);
+  console.log("Subscripción de Client WS en " + URL);
 });
