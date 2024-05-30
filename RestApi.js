@@ -10,7 +10,6 @@ const PORT = env.PORT4;
 const URL = `http://localhost:${PORT}`;
 
 const JWT_SECRET = env.JWT_SECRET;
-const user = env.user;
 
 const app = express();
 app.use(cors());

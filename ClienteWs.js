@@ -1,10 +1,20 @@
 // PUNTO 1: WS TEMPERATURA CADA 5 SEGUNDOS
 const express = require("express");
-const axios = require("axios");
 const http = require("http");
 const WebSocket = require("ws");
 const path = require("path");
 require("dotenv").config();
+
+// Función para generar números aleatorios siguiendo una distribución normal
+function randomGaussian(mean, standardDeviation) {
+    let u = 0, v = 0;
+    while(u === 0) u = Math.random(); //Convierte [0,1) a (0,1)
+    while(v === 0) v = Math.random();
+    let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+
+    // Escala el número a la desviación estándar y la media, y lo redondea
+    return Math.round(num * standardDeviation + mean);
+}
 
 const app = express();
 const PORT2 = process.env.PORT2;
@@ -20,9 +30,10 @@ wss.on("connection", (ws) => {
 
   const timeTemperature = async () => {
     try {
-      const max = 60;
-      const min = -20;
-      const temp = Math.floor(Math.random() * (max - min) + min);
+      const mean = 25; // Temperatura promedio
+      const standardDeviation = 5; // Desviación estándar, cuanto más grande, más dispersos serán los valores
+      const temp = randomGaussian(mean, standardDeviation);
+    
       ws.send(JSON.stringify(temp));
     } catch (error) {
       console.error("Error peticion temperatura:", error);
