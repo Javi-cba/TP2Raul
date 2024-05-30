@@ -3,10 +3,14 @@ const express = require("express");
 const { Pool } = require("pg");
 require("dotenv").config();
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 
 const env = process.env;
 const PORT = env.PORT4;
 const URL = `http://localhost:${PORT}`;
+
+const JWT_SECRET = env.JWT_SECRET;
+const user = env.user;
 
 const app = express();
 app.use(cors());
@@ -19,6 +23,26 @@ const pool = new Pool({
     rejectUnauthorized: false,
   },
 });
+
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Token no proporcionado' });
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: 'Token inválido' });
+    }
+    req.user = decoded;
+    next();
+  });
+};
+
+
 
 // Creacion de las tabla
 (async () => {
@@ -40,10 +64,8 @@ const pool = new Pool({
   }
 })();
 
-//
-// FALTA AGREGAR LA AUTENTICACION CON JWT.....
-//
-app.post("/db/temperatura", async (req, res) => {
+
+app.post("/db/temperatura", verifyToken, async (req, res) => {
   //Recibe la temp del webhook.js
   const temperatura = req.body.temp;
   const timespan = new Date();
